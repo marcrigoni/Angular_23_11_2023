@@ -475,3 +475,8 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+#bases de dados
+*.db
+*.db-shm
+*.db-wal
