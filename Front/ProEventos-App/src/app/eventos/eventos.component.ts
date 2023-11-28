@@ -51,10 +51,11 @@ export class EventosComponent implements OnInit {
 
   public getEventos(): void {
 
-    this.http.get('https://localhost:5001/api/evento').subscribe(
+    this.http.get('https://localhost:5001/api/eventos').subscribe(
       response => {
         this.eventos = response;
         this.eventosFiltrados = this.eventos;
+        console.log(response);
       },
       error => console.error(error)
     );
