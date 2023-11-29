@@ -6,25 +6,26 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse"  [collapse]="isCollapsed" [isAnimated]="true" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Eventos</a>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" routerLinkActive="active" >
+          <a class="nav-link active" aria-current="page" routerLink="eventos"  href="#">Eventos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Palestrantes</a>
+          <a class="nav-link" routerLink="palestrantes"  href="#">Palestrantes</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Contatos</a>
+          <a class="nav-link" routerLink="contatos"  href="#">Contatos</a>
         </li>
       </ul>
+
       <ul class="navbar-nav">
         <li class="nav-item dropdown" dropdown>
-          <a dropdownToggle class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+          <a dropdownToggle class="nav-link dropdown-toggle" href="#" style="cursor: pointer" id="navbarDropdownMenuLink" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             Vinícius
           </a>
           <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" routerLink="perfil"  href="#">
               Perfil
             </a>
             <div role="separator" class="divider"></div>

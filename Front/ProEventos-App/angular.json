@@ -66,10 +66,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ProEventos-App:build:production"
+              "buildTarget": "ProEventos-App:build:production"
             },
             "development": {
-              "browserTarget": "ProEventos-App:build:development"
+              "buildTarget": "ProEventos-App:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -77,7 +77,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ProEventos-App:build"
+            "buildTarget": "ProEventos-App:build"
           }
         },
         "test": {
