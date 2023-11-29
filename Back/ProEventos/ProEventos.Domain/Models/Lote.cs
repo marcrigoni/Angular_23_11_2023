@@ -16,6 +16,8 @@ namespace ProEventos.Domain.Models
 
         public int Qtde { get; set; }
 
-        public int EventoId { get; set; }        
+        public int EventoId { get; set; }
+
+        public Evento Evento { get; set; }
     }
 }
