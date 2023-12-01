@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { EventoService } from '../../services/evento.service';
-import { Evento } from '../../models/Evento';
+import { Component, OnInit } from '@angular/core';
+import { EventoService } from '@app/services/evento.service';
+import { Evento } from '@app/models/Evento';
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -17,4 +17,5 @@ export class EventosComponent implements OnInit {
   ngOnInit(): void {
 
   }
+  
 }

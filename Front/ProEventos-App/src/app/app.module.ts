@@ -10,7 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventoService } from './services/evento.service';
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 
@@ -28,6 +28,8 @@ import { EventosListaComponent } from './components/eventos/eventos-lista/evento
 import { UserComponent } from './components/user/user.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegistrationComponent } from './components/user/registration/registration.component';
+
+
 
 @NgModule({
     declarations: [
@@ -54,6 +56,7 @@ import { RegistrationComponent } from './components/user/registration/registrati
         BrowserAnimationsModule,
         CollapseModule,
         FormsModule,
+        ReactiveFormsModule,
         TooltipModule.forRoot(),
         BsDropdownModule.forRoot(),
         ModalModule.forRoot(),
