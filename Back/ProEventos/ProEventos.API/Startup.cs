@@ -17,7 +17,7 @@ using ProEventos.Aplication;
 using ProEventos.Aplication.Contracts;
 using ProEventos.Repository.Context;
 using ProEventos.Repository.Contratos;
-// using ProEventos.API.Data;
+using AutoMapper;
 
 namespace ProEventos.API
 {
@@ -39,6 +39,8 @@ namespace ProEventos.API
             services.AddControllers().AddNewtonsoftJson(
                 x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IEventosService, EventosService>();
             services.AddScoped<IGeralRepository, ProEventos.Repository.GeralRepository>();
@@ -63,6 +65,8 @@ namespace ProEventos.API
             }
 
             app.UseHttpsRedirection();            
+
+
 
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
