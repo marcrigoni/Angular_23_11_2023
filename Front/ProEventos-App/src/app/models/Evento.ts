@@ -8,7 +8,7 @@ export interface Evento {
 
     local: string;
 
-    dataEvento?: Date;
+    dataEvento: Date;
 
     tema: string;
 

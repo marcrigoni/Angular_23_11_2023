@@ -133,7 +133,7 @@ namespace ProEventos.API.Controllers
 
                 if (await _service.DeleteEvento(id))
                 {
-                    return Ok("Deletado!");
+                    return Ok(new {message = "Deletado!" });
                 }
                 else
                 {
