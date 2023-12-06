@@ -8,9 +8,9 @@ export interface Lote {
 
   preco: number;
 
-  dataInicio?: Date;
+  dataInicio: Date;
 
-  dataFim?: Date;
+  dataFim: Date;
 
   qtde: number;
 

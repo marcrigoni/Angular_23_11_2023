@@ -18,6 +18,7 @@ using ProEventos.Aplication.Contracts;
 using ProEventos.Repository.Context;
 using ProEventos.Repository.Contratos;
 using AutoMapper;
+using ProEventos.Repository;
 
 namespace ProEventos.API
 {
@@ -43,8 +44,11 @@ namespace ProEventos.API
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IEventosService, EventosService>();
-            services.AddScoped<IGeralRepository, ProEventos.Repository.GeralRepository>();
-            services.AddScoped<IEventosRepository, ProEventos.Repository.EventosRepository>();
+            services.AddScoped<ILoteService, LoteService>();
+
+            services.AddScoped<IGeralRepository, GeralRepository>();
+            services.AddScoped<IEventosRepository, EventosRepository>();
+            services.AddScoped<ILoteRepository, LoteRepository>();
 
             services.AddCors();
 
