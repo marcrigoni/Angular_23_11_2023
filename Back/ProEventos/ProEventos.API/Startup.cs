@@ -19,6 +19,9 @@ using ProEventos.Repository.Context;
 using ProEventos.Repository.Contratos;
 using AutoMapper;
 using ProEventos.Repository;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace ProEventos.API
 {
@@ -68,11 +71,17 @@ namespace ProEventos.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProEventos.API v1"));
             }
 
-            app.UseHttpsRedirection();            
+            app.UseHttpsRedirection();          
 
-
+            
 
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Resources")),
+                RequestPath = new PathString("/Resources")
+        });
 
             app.UseRouting();
 

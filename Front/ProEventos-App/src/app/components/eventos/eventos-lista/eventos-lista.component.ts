@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { Evento } from '@app/models/Evento';
 import { EventoService } from '@app/services/evento.service';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-eventos-lista',
@@ -31,6 +32,12 @@ export class EventosListaComponent implements OnInit {
   public set filtroLista(value: string) {
     this._filtroLista = value;
     this.eventosFiltrados = this.filtroLista ? this.filtrarEventos(this.filtroLista) : this.eventos;
+  }
+
+  mostraImagem(imageUrl: string) {
+    return (imageUrl !== '')
+      ? `${environment.apiUrl}resources/images/${imageUrl}`
+      : 'assets/img/semimagem.jpeg';
   }
 
   filtrarEventos(filtrarPor: string): any {

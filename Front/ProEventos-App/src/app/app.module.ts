@@ -51,7 +51,8 @@ defineLocale('pt-br', ptBrLocale);
         EventosListaComponent,
         UserComponent,
         LoginComponent,
-        RegistrationComponent
+        RegistrationComponent,
+
     ],
     imports: [
         BrowserModule,
