@@ -11,6 +11,10 @@ namespace ProEventos.Aplication.Dtos
     {
         public int Id { get; set; }
 
+        public int UserId { get; set; }
+
+        public UserDto UserDto { get; set; }
+
         public string Local { get; set; }
 
         public DateTime DataEvento { get; set; }

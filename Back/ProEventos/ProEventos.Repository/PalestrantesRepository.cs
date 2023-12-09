@@ -28,7 +28,9 @@ namespace ProEventos.Repository
                 query = query.Include(e => e.Eventos);
             }
 
-            query = query.AsNoTracking().OrderBy(e => e.Id).Where(e => e.Nome.ToLower().Contains(nome.ToLower()));
+            query = query.AsNoTracking().OrderBy(e => e.Id).Where(
+                e => e.User.PrimeiroNome.ToLower().Contains(nome.ToLower()) &&
+                e.User.UltimoNome.ToLower().Contains(nome.ToLower()));
             return await query.ToArrayAsync();
         }
 

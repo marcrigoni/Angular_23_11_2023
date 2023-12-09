@@ -7,11 +7,11 @@ using ProEventos.Domain.Models;
 namespace ProEventos.Repository.Contratos
 {
     public interface IEventosRepository
-{
-    Task<Evento[]> GetAllEventosByTemaAsync(string tema, bool includePalestrantes);
+    {
+        Task<Evento[]> GetAllEventosByTemaAsync(int userId, string tema, bool includePalestrantes = false);
 
-    Task<Evento[]> GetAllEventosAsync(bool includePalestrantes);
+        Task<Evento[]> GetAllEventosAsync(int userId, bool includePalestrantes = false);
 
-    Task<Evento> GetEventosByIdAsync(int eventoId, bool includePalestrantes);
-}
+        Task<Evento> GetEventosByIdAsync(int userId, int eventoId, bool includePalestrantes = false);
+    }
 }
