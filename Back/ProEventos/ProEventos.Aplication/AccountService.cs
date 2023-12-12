@@ -36,9 +36,9 @@ namespace ProEventos.Aplication
             try
             {
                 var user = await _userManager.Users
-                                .SingleOrDefaultAsync(user => user.UserName == userUpdateDto.UserName.ToLower());
+                                .SingleOrDefaultAsync(user => user.UserName.ToLower() == userUpdateDto.UserName.ToLower());
 
-                return await _signInManager.CheckPasswordSignInAsync(user, password, true);
+                return await _signInManager.CheckPasswordSignInAsync(user, password, false);
             }
             catch (System.Exception ex)
             {
@@ -46,7 +46,7 @@ namespace ProEventos.Aplication
             }
         }
 
-        public async Task<UserDto> CreateAccountAsync(UserDto userDto)
+        public async Task<UserUpdateDto> CreateAccountAsync(UserDto userDto)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace ProEventos.Aplication
 
                 if (result.Succeeded)
                 {
-                    var userToReturn = _mapper.Map<UserDto>(user);
+                    var userToReturn = _mapper.Map<UserUpdateDto>(user);
 
                     return userToReturn;
                 }
@@ -97,11 +97,16 @@ namespace ProEventos.Aplication
                     return null;
                 }
 
+                userUpdateDto.Id = user.Id;
+
                 _mapper.Map(userUpdateDto, user);
 
-                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                if (userUpdateDto.Password != null)
+                {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-                var result = await _userManager.ResetPasswordAsync(user, token, userUpdateDto.Password);
+                    await _userManager.ResetPasswordAsync(user, token, userUpdateDto.Password);                    
+                }
 
                 _userRepository.Update<User>(user);
 

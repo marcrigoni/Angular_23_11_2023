@@ -10,32 +10,47 @@ import { EventosListaComponent } from './components/eventos/eventos-lista/evento
 import { UserComponent } from './components/user/user.component';
 import { LoginComponent } from './components/user/login/login.component';
 import { RegistrationComponent } from './components/user/registration/registration.component';
+import { authGuard } from './guard/auth.guard';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {
+    path: '',
+    runGuardsAndResolvers: 'always',
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'user',
+        children: [
+          {
+            path: 'perfil', component: PerfilComponent
+          }
+        ]
+      },
+      { path: 'eventos', redirectTo: 'eventos/lista' },
+      {
+        path: 'eventos', component: EventosComponent,
+        children: [
+          { path: 'detalhe/:id', component: EventosDetalheComponent },
+          { path: 'detalhe', component: EventosDetalheComponent },
+          { path: 'lista', component: EventosListaComponent },
+        ]
+      },
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'palestrantes', component: PalestrantesComponent },
+      { path: 'contatos', component: ContatosComponent }
+    ]
+  },
+
   {
     path: 'user', component: UserComponent,
     children: [
       { path: 'login', component: LoginComponent },
       { path: 'registration', component: RegistrationComponent },
-      {
-        path: 'perfil', component: PerfilComponent
-      }
     ]
   },
-  { path: 'eventos', redirectTo: 'eventos/lista' },
-  {
-    path: 'eventos', component: EventosComponent,
-    children: [
-      { path: 'detalhe/:id', component: EventosDetalheComponent },
-      { path: 'detalhe', component: EventosDetalheComponent },
-      { path: 'lista', component: EventosListaComponent },
-    ]
-  },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'palestrantes', component: PalestrantesComponent },
-
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-  { path: 'contatos', component: ContatosComponent },
+  { path: 'home', component: HomeComponent },
   { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },
 ];
 

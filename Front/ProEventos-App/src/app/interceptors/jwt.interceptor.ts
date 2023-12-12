@@ -1,0 +1,52 @@
+// import {
+//   HttpEvent,
+//   HttpHandler,
+//   HttpInterceptor,
+//   HttpRequest
+// } from '@angular/common/http';
+// import { Injectable } from '@angular/core';
+// import { User } from '@app/models/Identity/User';
+// import { AccountService } from '@app/services/AccountService.service';
+// import { Observable, take, catchError, throwError } from 'rxjs';
+
+import { Injectable } from '@angular/core';
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor,
+} from '@angular/common/http';
+import { Observable, catchError, take, throwError } from 'rxjs';
+import { User } from '@app/models/Identity/User';
+import { AccountService } from '@app/services/AccountService.service';
+
+@Injectable()
+export class jwtInterceptor implements HttpInterceptor {
+
+  constructor(private accountService: AccountService) { }
+
+  intercept(
+    req: HttpRequest<unknown>,
+    next: HttpHandler): Observable<HttpEvent<unknown>> {
+
+    let currentUser: User | undefined;
+
+    this.accountService.currentUser$.pipe(take(1)).subscribe(
+      (user) => {
+        currentUser =
+        //user;
+          JSON.parse(localStorage.getItem('user')!);
+
+        if (currentUser!) {
+          req = req.clone(
+            {
+              setHeaders: {
+                Authorization: `Bearer ${currentUser.token}`
+              },
+            });
+        }
+      });
+
+    return next.handle(req);
+  }
+}

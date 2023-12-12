@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EventosComponent } from './components/eventos/eventos.component';
 import { PalestrantesComponent } from './components/palestrantes/palestrantes.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 
@@ -32,6 +32,10 @@ import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 import { defineLocale, ptBrLocale } from 'ngx-bootstrap/chronos';
 import { LoteService } from './services/lote.service';
 import { NgxCurrencyDirective } from "ngx-currency";
+import { jwtInterceptor } from './interceptors/jwt.interceptor';
+import { AccountService } from './services/AccountService.service';
+import { HomeComponent } from './components/home/home.component';
+
 
 
 defineLocale('pt-br', ptBrLocale);
@@ -52,8 +56,7 @@ defineLocale('pt-br', ptBrLocale);
         UserComponent,
         LoginComponent,
         RegistrationComponent,
-
-    ],
+        HomeComponent    ],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -73,13 +76,16 @@ defineLocale('pt-br', ptBrLocale);
         }),
         NgxSpinnerModule,
         NgxCurrencyDirective,
-        BsDatepickerModule.forRoot()
+      BsDatepickerModule.forRoot(),
     ],
-    providers: [
-      EventoService,
-      LoteService
-    ],
-    bootstrap: [AppComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [
+    EventoService,
+    LoteService,
+    AccountService,
+    {
+      provide: HTTP_INTERCEPTORS, useClass: jwtInterceptor, multi: true
+    },
+  ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

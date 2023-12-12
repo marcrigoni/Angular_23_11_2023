@@ -1,21 +1,22 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable, OnInit } from '@angular/core';
 import { Observable, take } from 'rxjs';
 import { Evento } from '../models/Evento';
 import { environment } from '@environments/environment.prod';
 
-@Injectable(
-  // {
-//   // providedIn: 'root'
-// }
-)
-export class EventoService {
+@Injectable()
+export class EventoService implements OnInit {
 
   baseUrl = environment.apiUrl + 'api/Eventos';
+  tokenHeader = new HttpHeaders({ Authorization: `Bearer ${JSON.parse(localStorage.getItem('user')!).token}`, });
 
   constructor(
   private http: HttpClient
   ) { }
+
+  ngOnInit(): void {
+    // this.getEvento();
+  }
 
   public getEvento() : Observable<Evento[]> {
     return this.http.get<Evento[]>(this.baseUrl).pipe(take(1));
@@ -38,7 +39,7 @@ export class EventoService {
   }
 
   public deleteEvento(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`).pipe(take(1));
+    return this.http.delete(`${this.baseUrl}/${id}` ).pipe(take(1));
   }
 
   public postUpload(eventoId: number, file: File[]): Observable<Evento> {

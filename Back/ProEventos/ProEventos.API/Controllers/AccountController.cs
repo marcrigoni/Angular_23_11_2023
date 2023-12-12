@@ -59,7 +59,11 @@ namespace ProEventos.API.Controllers
                 var user = await _accountService.CreateAccountAsync(userDto);
                 if (user != null)                
                 {
-                    return Ok(user);
+                    return Ok(new {
+                        userName = user.UserName, 
+                        PrimeiroNome = user.PrimeiroNome, 
+                        token = _tokenService.CreateToken(user).Result
+                        });
                 }
                 return BadRequest("Usuário não criado, tente novamente mais tarde!");
             }
@@ -71,17 +75,19 @@ namespace ProEventos.API.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(UserLoginDto userLogin)
+        public async Task<IActionResult> Login(UserLoginDto userLoginDto)
         {
+            // userLoginDto.Password = "Je@lowsguy1";
+
             try
             {
-                var user = await _accountService.GetUserByUserNameAsync(userLogin.Username);
+                var user = await _accountService.GetUserByUserNameAsync(userLoginDto.Username);
                 if (user == null)
                 {
                     return Unauthorized("Usuário ou senha inválidos");
                 }
 
-                var result = await _accountService.CheckUserPasswordAsync(user, userLogin.Password);
+                var result = await _accountService.CheckUserPasswordAsync(user, userLoginDto.Password);
 
                 if (!result.Succeeded)
                 {
@@ -90,8 +96,8 @@ namespace ProEventos.API.Controllers
 
                 return Ok(new{
                     userName = user.UserName, 
-                    PrimeiroNome = user.PriemeiroNome, 
-                    token = _tokenService.CreateToken(user)
+                    PrimeiroNome = user.PrimeiroNome, 
+                    token = _tokenService.CreateToken(user).Result
                 });
             }
             catch (System.Exception ex)
@@ -105,6 +111,11 @@ namespace ProEventos.API.Controllers
         {
             try
             {
+                if (userUpdateDto.UserName != User.GetUserName())
+                {
+                    return Unauthorized("Usuário Inválido!");
+                }
+
                 var user = await _accountService.GetUserByUserNameAsync(User.GetUserName());
                 if (user == null)
                 {
@@ -116,7 +127,12 @@ namespace ProEventos.API.Controllers
                 {
                     return NoContent();
                 }
-                return Ok(userReturn);
+                return Ok(new
+                {
+                    userName = userReturn.UserName,
+                    PrimeiroNome = userReturn.PrimeiroNome,
+                    token = _tokenService.CreateToken(userReturn).Result
+                });
             }
             catch (System.Exception ex)
             {

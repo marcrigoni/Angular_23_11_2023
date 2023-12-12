@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProEventos.Aplication.Dtos;
 using ProEventos.Aplication.Contracts;
-using ProEventos.Aplication.Dtos;
 using ProEventos.Repository;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;

@@ -82,7 +82,9 @@ export class EventosListaComponent implements OnInit {
       error: (erro: any) => {
         this.spinnerService.hide();
         this.toastrService.error('Erro ao carregar Eventos!', 'Verifique');
-      }
+        console.log(erro);
+      },
+      complete: () => this.spinnerService.hide()
     }
     this.eventoService.getEvento().subscribe(observer);
   }
@@ -119,9 +121,6 @@ export class EventosListaComponent implements OnInit {
     this.modalRef?.hide();
   }
 
-  /**
-   * detalheEvento
-id: number  : void  */
   public detalheEvento(id: number): void {
     this.router.navigate([`eventos/detalhe/${id}`]);
   }

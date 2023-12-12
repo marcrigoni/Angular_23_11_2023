@@ -6,7 +6,7 @@
     </div>
   </div>
   <div class="col-md-6">
-    <form [formGroup]="form" class="p-1">
+    <form [formGroup]="form" (ngSubmit)="register()" class="p-1">
       <div class="pb-2 d-block d-md-none">
         <h3 class="border-bottom">Cadastro de Usuário</h3>
       </div>
@@ -71,13 +71,13 @@
         <div class="form-group col-sm-6">
           <label for="">Confirmar Senha:</label>
           <input class="form-control" type="password"
-          formControlName="confirmeSenha"
-          [ngClass]="{'is-invalid': f.confirmeSenha.errors && f.confirmeSenha.touched}"
+          formControlName="password"
+          [ngClass]="{'is-invalid': f.password.errors && f.password.touched}"
           placeholder="Confirme a Senha" />
-        <div *ngIf="f.confirmeSenha.errors?.required" class="invalid-feedback">
+        <div *ngIf="f.password.errors?.required" class="invalid-feedback">
           Confirmar a senha é Obrigatório
         </div>
-        <div *ngIf="f.confirmeSenha.errors?.mustMatch" class="invalid-feedback">
+        <div *ngIf="f.password.errors?.mustMatch" class="invalid-feedback">
           O valor deve conferir com o valor primeiramente digitado.
         </div>
       </div>
