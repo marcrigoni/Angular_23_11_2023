@@ -35,7 +35,7 @@ import { NgxCurrencyDirective } from "ngx-currency";
 import { jwtInterceptor } from './interceptors/jwt.interceptor';
 import { AccountService } from './services/AccountService.service';
 import { HomeComponent } from './components/home/home.component';
-
+import { PaginationModule } from "ngx-bootstrap/pagination";
 
 
 defineLocale('pt-br', ptBrLocale);
@@ -74,7 +74,8 @@ defineLocale('pt-br', ptBrLocale);
             preventDuplicates: true,
             progressBar: true
         }),
-        NgxSpinnerModule,
+      NgxSpinnerModule,
+      PaginationModule.forRoot(),
         NgxCurrencyDirective,
       BsDatepickerModule.forRoot(),
     ],

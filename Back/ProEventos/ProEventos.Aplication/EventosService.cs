@@ -8,6 +8,7 @@ using ProEventos.Aplication.Dtos;
 using ProEventos.Domain.Identity;
 using ProEventos.Domain.Models;
 using ProEventos.Repository.Contratos;
+using ProEventos.Repository.Models;
 
 namespace ProEventos.Aplication
 {
@@ -69,18 +70,23 @@ namespace ProEventos.Aplication
             }
         }
 
-        public async Task<EventoDto[]> GetAllEventosAsync(int userId, bool includePalestrantes = false)
+        public async Task<PageList<EventoDto>> GetAllEventosAsync(int userId, PageParams pageParams, bool includePalestrantes = false)
         {
             try
             {
-                var eventos = await _eventosRepository.GetAllEventosAsync(userId, includePalestrantes);
+                var eventos = await _eventosRepository.GetAllEventosAsync(userId, pageParams, includePalestrantes);
+
                 if (eventos == null)
                 {
                     return null;
                 }
 
-                var resultad = _mapper.Map<EventoDto[]>(eventos);
+                var resultad = _mapper.Map<PageList<EventoDto>>(eventos);
 
+                resultad.CurrentPage = eventos.CurrentPage;
+                resultad.TotalPages = eventos.TotalPages;
+                resultad.PageSize = eventos.PageSize;
+                resultad.TotalCount = eventos.TotalCount;                
 
                 return resultad;
             }
@@ -88,27 +94,7 @@ namespace ProEventos.Aplication
             {                
                 throw new Exception(ex.Message);
             }
-        }
-
-        public async Task<EventoDto[]> GetAllEventosByTemaAsync(int userId, string tema, bool includePalestrantes = false)
-        {
-            try
-            {
-                var eventos = await _eventosRepository.GetAllEventosByTemaAsync(userId, tema, includePalestrantes);
-                if (eventos == null)
-                {
-                    return null;
-                }
-
-                var resultad = _mapper.Map<EventoDto[]>(eventos);
-
-                return resultad;
-            }
-            catch (System.Exception ex) 
-            {
-                throw new Exception(ex.Message);
-            }
-        }
+        }        
         
         public async Task<EventoDto> GetEventosByIdAsync(int userId, int eventoId, bool includePalestrantes = false)
         {

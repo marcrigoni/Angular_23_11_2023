@@ -273,7 +273,7 @@ export class EventosDetalheComponent implements OnInit {
   public salvarLotes(): void {
     if (this.form.valid) {
       this.spinner.show();
-      console.log(this.form.value['lotes']);
+      console.log('Lotes: ' + this.form.value['lotes'][0]);
       if (this.form.controls['lotes'].valid) {
         this.loteService.saveLote(this.eventoId, this.form.value['lotes']).subscribe(
           () => {

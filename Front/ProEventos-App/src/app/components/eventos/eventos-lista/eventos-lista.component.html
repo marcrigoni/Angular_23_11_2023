@@ -10,8 +10,8 @@
         <input
             type="text"
             class="form-control mr-2"
-            placeholher="buscar"
-            [(ngModel)]="filtroLista"
+            placeholher="Filtrar por Tema e Local"
+            (input)="filtrarEventos($event.target)"
             >
         <button class="btn btn-outline-success">Buscar</button>
       </div>
@@ -23,8 +23,7 @@
         Novo
       </a>
     </div>
-  </div>
-  <h3>Filtro: {{filtroLista}}</h3>
+  </div>  
   <table   class="table table-striped table-hover" >
   <thead class="thead-dark">
       <tr>
@@ -44,7 +43,7 @@
       </tr>
   </thead>
   <tbody *ngIf="eventos && eventos.length">
-      <tr *ngFor="let item of eventosFiltrados" (click)="detalheEvento(item.id)" style="cursor: pointer;" >
+      <tr *ngFor="let item of eventos" (click)="detalheEvento(item.id)" style="cursor: pointer;" >
           <td>
               <img [collapse]="!mostrarImagem"
               [isAnimated]="true"
@@ -79,6 +78,21 @@
       </td>
     </tfoot>
   </table>
+  <div class="d-flex justify-content-center">
+    <pagination 
+        [boundaryLinks]="true"         
+        [totalItems]="pagination.totalItems"
+        [itemsPerPage]="pagination.itemsPerPage"
+        [(ngModel)]="pagination.currentPage"
+        (pageChanged)="pageChanged($event)"
+
+        pageBtnClass="btn"
+        previousText="&lsaquo;" 
+        nextText="&rsaquo;" 
+        firstText="&laquo;" 
+        lastText="&raquo;"> 
+    </pagination>
+  </div>
 </div>
 <!-- Modal -->
 <ng-template #template>
