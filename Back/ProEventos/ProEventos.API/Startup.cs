@@ -28,6 +28,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using ProEventos.API.Helpers;
 
 namespace ProEventos.API
 {
@@ -93,12 +94,17 @@ namespace ProEventos.API
             services.AddScoped<ILoteService, LoteService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IPalestranteService, PalestranteService>();
+            services.AddScoped<IRedeSocialService, RedeSocialService>();
+            services.AddScoped<IUtil, Util>();
 
             services.AddScoped<IGeralRepository, GeralRepository>();
             services.AddScoped<IEventosRepository, EventosRepository>();
             services.AddScoped<ILoteRepository, LoteRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
-
+            services.AddScoped<IPalestranteRepository, PalestrantesRepository>();
+            services.AddScoped<IRedeSocialRepository, RedeSocialRepository>();
+            
             services.AddCors();
 
             services.AddSwaggerGen(c =>

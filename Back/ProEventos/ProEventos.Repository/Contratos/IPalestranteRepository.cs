@@ -3,19 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ProEventos.Domain.Models;
+using ProEventos.Repository.Models;
 
 namespace ProEventos.Repository.Contratos
 {
-    public interface IPalestranteRepository
+    public interface IPalestranteRepository : IGeralRepository
     {
-        //Palestrantes
+        Task<PageList<Palestrante>> GetAllPalestrantesAsync( PageParams pageParams, bool includeEventos = false );
 
-        Task<Palestrante[]> GetAllPalestrantesByNomeAsync(string nome, bool includeEventos);
-
-        Task<Palestrante[]> GetAllPalestrantesAsync( bool includeEventos);
-
-        Task<Palestrante> GetPalestrantesByIdAsync(int palestranteId, bool includeEventos);
-
-        
+        Task<Palestrante> GetPalestrantesByUserIdAsync(int userId, bool includeEventos = false);        
     }
 }

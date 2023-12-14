@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProEventos.API.Extensions;
+using ProEventos.API.Helpers;
 using ProEventos.Aplication.Contracts;
 using ProEventos.Aplication.Dtos;
 
@@ -21,12 +22,17 @@ namespace ProEventos.API.Controllers
     {
         private readonly IAccountService _accountService;
         private readonly ITokenService _tokenService;
+        private readonly IUtil _util;
+
+        private readonly string destino = "Images"; 
 
         public AccountController(
             IAccountService accountService, 
-            ITokenService tokenService)
+            ITokenService tokenService, 
+            IUtil util)
         {
             _tokenService = tokenService;
+            _util = util;
             _accountService = accountService;            
         }
 
@@ -137,6 +143,34 @@ namespace ProEventos.API.Controllers
             catch (System.Exception ex)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao atualizar o Usuário. Erro: {ex.Message}");
+            }
+        }
+
+        public async Task<IActionResult> UploadImage(int eventoId)
+        {
+            try
+            {
+                // var evento = await _service.UpdateEvento()
+                var user = await _accountService.GetUserByUserNameAsync(User.GetUserName());
+                if (user == null)
+                {
+                    return NoContent();
+                }
+
+                var file = Request.Form.Files[0];
+
+                if (file.Length > 0)
+                {
+                    _util.DeleteImage(user.ImageUrl, destino);
+                    user.ImageUrl = await _util.SaveImage(file, destino);
+                }
+                var userRetorno = await _accountService.UpdateAccount(user);
+
+                return Ok(userRetorno);
+            }
+            catch (System.Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar usuário para salvamento de imagem. Erro: {ex.Message}");
             }
         }
     }

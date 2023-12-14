@@ -7,17 +7,13 @@ namespace ProEventos.Aplication.Dtos
 {
     public class PalestranteDto
     {
-        public int Id { get; set; }
-
-        public string Nome { get; set; }
+        public int Id { get; set; }        
 
         public string MiniCurriculo { get; set; }
 
-        public string ImagemURL { get; set; }
+        public int UserId { get; set; }
 
-        public string Telefone { get; set; }
-
-        public string Email { get; set; }
+        public UserUpdateDto User { get; set; }
 
         public IEnumerable<RedeSocialDto> RedesSociais { get; set; }
 

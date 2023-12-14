@@ -14,6 +14,7 @@ using System.IO;
 using ProEventos.API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using ProEventos.Repository.Models;
+using ProEventos.API.Helpers;
 // using ProEventos.API.Data;
 
 namespace ProEventos.API.Controllers
@@ -24,16 +25,19 @@ namespace ProEventos.API.Controllers
     public class EventosController : Controller
     {   
         private readonly IEventosService _service;
+        private readonly IUtil _util;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IAccountService _accountService;
 
+        private readonly string destino = "Images";
+
         public EventosController(IEventosService service, 
-                                IWebHostEnvironment webHostEnvironment,
+                                IUtil util,
                                 IAccountService accountService)
         {
-            _accountService = accountService;
-            _webHostEnvironment = webHostEnvironment;
-            _service = service;            
+            _accountService = accountService;            
+            _service = service;
+            _util = util;
         }
 
         [HttpGet]
@@ -93,8 +97,8 @@ namespace ProEventos.API.Controllers
 
                 if (file.Length > 0)
                 {
-                    DeleteImage(evento.ImageURL);
-                    evento.ImageURL = await SaveImage(file);
+                    _util.DeleteImage(evento.ImageURL, destino);
+                    evento.ImageURL = await _util.SaveImage(file, destino);
                 }
                 var eventoRetorno = await _service.UpdateEvento(User.GetUserId(),  eventoId, evento);
 
@@ -104,35 +108,7 @@ namespace ProEventos.API.Controllers
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar evento. Erro: {ex.Message}");
             }
-        }
-
-        [NonAction]
-        private async Task<string> SaveImage(IFormFile imageFile)
-        {
-            string imageName = new string(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ', '-');
-
-            imageName = $"{imageName}{DateTime.UtcNow.ToString("yymmssfff")}{Path.GetExtension(imageFile.FileName)}";
-
-            var imgPath = Path.Combine(_webHostEnvironment.ContentRootPath, @"Resources/images", imageName);
-
-            using (var fileStream = new FileStream(imgPath, FileMode.Create))
-            {
-                await imageFile.CopyToAsync(fileStream);
-            }
-            
-            return imageName;
-        }
-
-        [NonAction]
-        private void DeleteImage(string imageName)
-        {
-            var imgPath = Path.Combine(_webHostEnvironment.ContentRootPath, @"Resources/images", imageName);
-
-            if (System.IO.File.Exists(imgPath))
-            {
-                System.IO.File.Delete(imgPath);
-            }
-        }
+        }        
 
         [HttpPost]
         public async Task<IActionResult> Post(EventoDto model)
@@ -152,8 +128,6 @@ namespace ProEventos.API.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar recuperar evento. Erro: {ex.Message}");
             }
         }
-
-
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, EventoDto model)
