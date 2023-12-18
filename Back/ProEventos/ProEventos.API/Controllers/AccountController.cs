@@ -146,7 +146,8 @@ namespace ProEventos.API.Controllers
             }
         }
 
-        public async Task<IActionResult> UploadImage(int eventoId)
+        [HttpPost("upload-image")]
+        public async Task<IActionResult> UploadImage()
         {
             try
             {
@@ -161,8 +162,8 @@ namespace ProEventos.API.Controllers
 
                 if (file.Length > 0)
                 {
-                    _util.DeleteImage(user.ImageUrl, destino);
-                    user.ImageUrl = await _util.SaveImage(file, destino);
+                    _util.DeleteImage(user.ImagemUrl, destino);
+                    user.ImagemUrl = await _util.SaveImage(file, destino);
                 }
                 var userRetorno = await _accountService.UpdateAccount(user);
 

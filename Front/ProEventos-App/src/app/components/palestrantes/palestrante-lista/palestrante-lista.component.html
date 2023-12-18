@@ -1,0 +1,53 @@
+<div class="card rounded shadow-sm p-3">
+  <div class="d-flex">
+    <div class="flex-fill pr-3">
+      <div class="form-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Filtro: </div>
+        </div>
+        <input type="text" class="form-control mr-2" placeholher="Filtrar por Nome e MiniCurrículo"
+          (input)="filtrarPalestrantes($event.target)">
+        <button class="btn btn-outline-success">Buscar</button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="palestrantes && palestrantes.length" class="row" >
+    <div *ngFor="let item of palestrantes" class="col-md-4 mb-4 d-flex align-items-stretch">
+      <div class="card mb-3">
+        <div class="d-flex align-self-center pt-3">
+          <!-- <a href="#aboutModal" data-toggle="modal" data-target="#myModal"> -->
+          <img
+            [src]="getImage(item.user.imagemUrl)"
+            name="aboutme"
+            width="120"
+            height="120"/>
+          <!-- </a> -->
+        </div>
+        <div class="card-body">
+          <div class="h4 text-center mb-3">&#64; {{ item.user.userName }}</div>
+          <div class="h7 text-bold pb-1">
+            <b>Nome:</b> {{ item.user.primeiroNome + " " + item.user.ultimoNome }}
+          </div>
+          <div class="h7">
+            {{ item.miniCurriculo }}
+          </div>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-6 text-center border-right">
+                <div class="h5">1342</div>
+                <div class="h6 text-muted">Meus Eventos Criados</div>
+              </div>
+              <div class="col-6 text-center">
+                <div class="h5">1342</div>
+                <div class="h6 text-muted">Eventos como Participante</div>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="card-footer"></div>
+      </div>
+    </div>
+  </div>
+</div>

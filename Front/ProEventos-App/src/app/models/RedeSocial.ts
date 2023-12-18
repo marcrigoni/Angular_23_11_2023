@@ -6,7 +6,7 @@ export interface RedeSocial {
 
   nome: string;
 
-  uRL: string;
+  url: string;
 
   eventoId: number;
 

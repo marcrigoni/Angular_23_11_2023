@@ -36,57 +36,68 @@ import { jwtInterceptor } from './interceptors/jwt.interceptor';
 import { AccountService } from './services/AccountService.service';
 import { HomeComponent } from './components/home/home.component';
 import { PaginationModule } from "ngx-bootstrap/pagination";
-
+import { TabsModule } from "ngx-bootstrap/tabs";
+import { PerfilDetalheComponent } from './components/user/perfil/perfil-detalhe/perfil-detalhe.component';
+import { PalestranteListaComponent } from './components/palestrantes/palestrante-lista/palestrante-lista.component';
+import { PalestranteDetalheComponent } from './components/palestrantes/palestrante-detalhe/palestrante-detalhe.component';
+import { RedesocialService } from './services/redesocial.service';
+import { RedesSociaisComponent } from './components/redesSociais/redesSociais.component';
 
 defineLocale('pt-br', ptBrLocale);
 @NgModule({
-    declarations: [
-        AppComponent,
-        EventosComponent,
-        EventosComponent,
-        PalestrantesComponent,
-        NavComponent,
-        DateTimeFormatPipe,
-        ContatosComponent,
-        DashboardComponent,
-        PerfilComponent,
-        TituloComponent,
-        EventosDetalheComponent,
-        EventosListaComponent,
-        UserComponent,
-        LoginComponent,
-        RegistrationComponent,
-        HomeComponent    ],
+  declarations: [
+    AppComponent,
+    EventosComponent,
+    EventosComponent,
+    PalestrantesComponent,
+    PalestranteListaComponent,
+    PalestranteDetalheComponent,
+    NavComponent,
+    DateTimeFormatPipe,
+    ContatosComponent,
+    DashboardComponent,
+    PerfilComponent,
+    RedesSociaisComponent, 
+    PerfilDetalheComponent,
+    TituloComponent,
+    EventosDetalheComponent,
+    EventosListaComponent,
+    UserComponent,
+    LoginComponent,
+    RegistrationComponent,
+    HomeComponent],
     imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        CollapseModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TooltipModule.forRoot(),
-        BsDropdownModule.forRoot(),
-        ModalModule.forRoot(),
-        ToastrModule.forRoot({
-            timeOut: 10000,
-            positionClass: 'toast-bottom-right',
-            preventDuplicates: true,
-            progressBar: true
-        }),
+      BrowserModule,
+      AppRoutingModule,
+      HttpClientModule,
+      BrowserAnimationsModule,
+      CollapseModule,
+      FormsModule,
+      ReactiveFormsModule,
+      TooltipModule.forRoot(),
+      BsDropdownModule.forRoot(),
+      ModalModule.forRoot(),
+      ToastrModule.forRoot({
+        timeOut: 10000,
+        positionClass: 'toast-bottom-right',
+        preventDuplicates: true,
+        progressBar: true
+      }),
       NgxSpinnerModule,
       PaginationModule.forRoot(),
-        NgxCurrencyDirective,
+      NgxCurrencyDirective,
       BsDatepickerModule.forRoot(),
+      TabsModule.forRoot()
     ],
-  providers: [
-    EventoService,
-    LoteService,
-    AccountService,
-    {
-      provide: HTTP_INTERCEPTORS, useClass: jwtInterceptor, multi: true
-    },
-  ],
+    providers: [
+      EventoService,
+      LoteService,
+      AccountService,
+      RedesocialService,
+      {
+        provide: HTTP_INTERCEPTORS, useClass: jwtInterceptor, multi: true
+      },
+    ],
     bootstrap: [AppComponent]
-})
-export class AppModule { }
+  })
+  export class AppModule { }

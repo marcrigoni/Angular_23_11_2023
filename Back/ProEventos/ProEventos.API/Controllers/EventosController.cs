@@ -161,7 +161,7 @@ namespace ProEventos.API.Controllers
 
                 if (await _service.DeleteEvento(User.GetUserId(), id))
                 {
-                    DeleteImage(evento.ImageURL);
+                    _util.DeleteImage(evento.ImageURL, destino);
                     return Ok(new {message = "Deletado!" });
                 }
                 else
